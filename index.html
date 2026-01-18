@@ -3,21 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Truesoulmate - Login</title>
+    <title>Truesoulmate</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         body { background-color: #f3f4f6; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-        .app-container { max-width: 450px; margin: 0 auto; background: white; min-height: 100vh; position: relative; display: flex; flex-direction: column; }
-        .bg-brand { background-color: #e94057; }
         
-        /* Google Button Style - Clean & Official */
+        /* Premium Container Style */
+        .app-container { 
+            max-width: 450px; 
+            margin: 0 auto; 
+            background: #e94057; /* Brand Color Background */
+            min-height: 100vh; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        /* Animations */
+        .bounce-heart { animation: bounce 2s infinite; }
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Google Button Premium Style */
         .btn-google { 
             background: white; 
             color: #374151; 
             border: 1px solid #e5e7eb; 
-            padding: 12px; 
+            padding: 14px; 
             border-radius: 50px; 
             font-weight: 600; 
             width: 100%; 
@@ -26,28 +45,29 @@
             justify-content: center; 
             text-decoration: none; 
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: all 0.2s;
+            transition: transform 0.2s;
+            margin-top: 20px;
         }
-        .btn-google:hover {
-            background-color: #f9fafb;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
+        .btn-google:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
-    <div class="app-container justify-center items-center bg-brand text-white text-center p-6">
+    <div class="app-container">
         
-        <div class="animate-bounce mb-6">
-            <i class="fas fa-heart text-6xl drop-shadow-lg"></i>
+        <div class="bounce-heart mb-6">
+            <i class="fas fa-heart text-white text-7xl drop-shadow-lg"></i>
         </div>
-        <h1 class="text-4xl font-extrabold mb-2 tracking-wide">Truesoulmate</h1>
-        <p class="text-lg opacity-90 mb-12">Dil se Dil Tak</p>
+        
+        <h1 class="text-4xl font-extrabold mb-2 text-white tracking-wide drop-shadow-md">Truesoulmate</h1>
+        <p class="text-lg text-rose-100 opacity-90 mb-12 font-medium tracking-widest uppercase">Dil se Dil Tak</p>
 
-        <div class="bg-white text-gray-800 p-8 rounded-[2rem] w-full shadow-2xl">
-            <h2 class="text-2xl font-bold mb-2">Get Started</h2>
-            <p class="text-gray-400 text-sm mb-8">Find your perfect match today.</p>
+        <div class="bg-white text-gray-800 p-8 rounded-[2rem] w-full shadow-2xl relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-rose-50 rounded-full opacity-50"></div>
             
-            <a href="create-profile.html" class="btn-google gap-3">
+            <h2 class="text-2xl font-bold mb-2 text-gray-800 relative z-10">Get Started</h2>
+            <p class="text-gray-400 text-sm mb-6 relative z-10">Sign up to find your perfect match nearby.</p>
+            
+            <a href="create-profile.html" class="btn-google gap-3 relative z-10">
                 <svg class="w-6 h-6" viewBox="0 0 48 48">
                     <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
                     <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
@@ -57,8 +77,11 @@
                 <span>Continue with Google</span>
             </a>
             
-            <p class="text-xs text-gray-400 mt-6">By signing up, you agree to our Terms.</p>
+            <p class="text-xs text-gray-300 mt-6 text-center">
+                By continuing, you agree to our Terms of Service.
+            </p>
         </div>
+
     </div>
 </body>
 </html>
