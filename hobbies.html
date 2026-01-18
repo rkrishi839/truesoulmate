@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interests</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        body { background-color: #f3f4f6; font-family: 'Inter', sans-serif; }
+        .app-container { max-width: 450px; margin: 0 auto; background: white; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; }
+        
+        /* Interest Chips */
+        .chip {
+            padding: 10px 20px; border: 1px solid #e5e7eb; border-radius: 50px; font-size: 14px;
+            font-weight: 600; color: #4b5563; cursor: pointer; transition: all 0.2s; background: white;
+            display: inline-block; margin: 5px; user-select: none;
+        }
+        /* Checked State */
+        .chip input:checked + span {
+            background-color: #e94057; color: white; border-color: #e94057;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, #e94057, #ff6b81); color: white; border: none; padding: 16px;
+            border-radius: 50px; font-weight: bold; width: 100%; margin-top: auto; text-align: center; display: block; text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="mb-6">
+            <a href="photo-upload.html" class="text-gray-400"><i class="fas fa-arrow-left text-xl"></i></a>
+            <h1 class="text-3xl font-extrabold text-gray-800 mt-4">Your Interests</h1>
+            <p class="text-gray-400 text-sm">Select at least 3 interests.</p>
+        </div>
+
+        <div class="flex flex-wrap content-start">
+            <label class="chip"><input type="checkbox" class="hidden"><span>🎵 Music</span></label>
+            <label class="chip"><input type="checkbox" class="hidden"><span>✈️ Travel</span></label>
+            <label class="chip"><input type="checkbox" class="hidden"><span>🍕 Foodie</span></label>
+            <label class="chip"><input type="checkbox" class="hidden"><span>📸 Photography</span></label>
+            <label class="chip"><input type="checkbox" class="hidden"><span>🎮 Gaming</span></label>
+            <label class="chip"><input type="checkbox" class="hidden"><span>💪 Gym</span></label>
+            <label class="chip"><input type="checkbox" class="hidden"><span>🎨 Art</span></label>
+            <label class="chip"><input type="checkbox" class="hidden"><span>🐶 Pets</span></label>
+            <label class="chip"><input type="checkbox" class="hidden"><span>📚 Reading</span></label>
+            <label class="chip"><input type="checkbox" class="hidden"><span>💃 Dancing</span></label>
+            <label class="chip"><input type="checkbox" class="hidden"><span>🏎️ Cars</span></label>
+            <label class="chip"><input type="checkbox" class="hidden"><span>🏏 Cricket</span></label>
+        </div>
+
+        <script>
+            // Simple logic to toggle style (Visual only)
+            document.querySelectorAll('.chip input').forEach(item => {
+                item.addEventListener('change', event => {
+                    if(event.target.checked) {
+                        event.target.parentElement.style.borderColor = '#e94057';
+                        event.target.nextElementSibling.style.backgroundColor = '#e94057';
+                        event.target.nextElementSibling.style.color = 'white';
+                    } else {
+                        event.target.parentElement.style.borderColor = '#e5e7eb';
+                        event.target.nextElementSibling.style.backgroundColor = 'white';
+                        event.target.nextElementSibling.style.color = '#4b5563';
+                    }
+                })
+            });
+        </script>
+
+        <a href="home.html" class="btn-primary">
+            Finish & Explore <i class="fas fa-check ml-2"></i>
+        </a>
+    </div>
+</body>
+</html>
