@@ -10,16 +10,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         body { background-color: #f3f4f6; font-family: 'Inter', sans-serif; }
         .app-container { max-width: 450px; margin: 0 auto; background: white; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; }
-        .text-brand { color: #e94057; }
-        .input-field {
-            width: 100%; padding: 15px; background: #f9fafb; border: 1px solid #e5e7eb;
-            border-radius: 15px; margin-bottom: 15px; outline: none; transition: all 0.2s;
-        }
+        .input-field { width: 100%; padding: 15px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 15px; margin-bottom: 15px; outline: none; transition: 0.2s; }
         .input-field:focus { border-color: #e94057; background: white; }
-        .btn-primary {
-            background: linear-gradient(to right, #e94057, #ff6b81); color: white; border: none; padding: 16px;
-            border-radius: 50px; font-weight: bold; width: 100%; cursor: pointer; margin-top: auto;
-        }
+        .btn-primary { background: linear-gradient(to right, #e94057, #ff6b81); color: white; padding: 16px; border-radius: 50px; font-weight: bold; width: 100%; text-align: center; display: block; text-decoration: none; margin-top: auto; cursor: pointer; border: none; }
+        .location-btn { color: #e94057; font-size: 13px; font-weight: bold; cursor: pointer; display: inline-flex; items-center; gap: 5px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -27,15 +21,12 @@
         <div class="mb-6">
             <a href="index.html" class="text-gray-400"><i class="fas fa-arrow-left text-xl"></i></a>
             <h1 class="text-3xl font-extrabold text-gray-800 mt-4">Profile Details</h1>
-            <p class="text-gray-400 text-sm">Fill in your details to get discovered.</p>
+            <p class="text-gray-400 text-sm">Fill details to help us find matches.</p>
         </div>
 
         <form action="photo-upload.html">
             <label class="text-xs font-bold text-gray-500 ml-2">FULL NAME</label>
             <input type="text" class="input-field" placeholder="e.g. Rahul Sharma" required>
-
-            <label class="text-xs font-bold text-gray-500 ml-2">USERNAME</label>
-            <input type="text" class="input-field" placeholder="@rahul_07" required>
 
             <div class="flex gap-4">
                 <div class="w-1/2">
@@ -47,19 +38,42 @@
                     <select class="input-field">
                         <option>Male</option>
                         <option>Female</option>
-                        <option>Other</option>
                     </select>
                 </div>
             </div>
 
-            <label class="text-xs font-bold text-gray-500 ml-2">MOBILE NUMBER</label>
-            <input type="tel" class="input-field" placeholder="+91 98765 43210" required>
+            <label class="text-xs font-bold text-gray-500 ml-2">CITY</label>
+            <div class="relative">
+                <input type="text" id="cityInput" class="input-field" placeholder="Mumbai" required>
+                <div onclick="getLocation()" class="location-btn absolute right-4 top-4">
+                    <i class="fas fa-map-marker-alt"></i> Use Current Location
+                </div>
+            </div>
 
-            <label class="text-xs font-bold text-gray-500 ml-2">BIO (About You)</label>
+            <label class="text-xs font-bold text-gray-500 ml-2">BIO</label>
             <textarea class="input-field h-24 resize-none" placeholder="I love music, travel and..."></textarea>
 
             <button type="submit" class="btn-primary">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
         </form>
     </div>
+
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                // Browser se Permission mangega
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+        function showPosition(position) {
+            // Permission milne par dummy city bhar dega (Actual API ke bina coordinates se city naam nahi aata)
+            document.getElementById("cityInput").value = "Detected Location ✅";
+            alert("Location Access Granted! Coordinates: " + position.coords.latitude + ", " + position.coords.longitude);
+        }
+        function showError(error) {
+            alert("Location access denied or error occurred.");
+        }
+    </script>
 </body>
 </html>
