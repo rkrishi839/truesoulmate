@@ -10,38 +10,65 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         body { background-color: #f3f4f6; font-family: 'Inter', sans-serif; }
         .app-container { max-width: 450px; margin: 0 auto; background: white; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .text-brand { color: #e94057; }
-        .photo-circle {
-            width: 200px; height: 200px; background: #fff0f3; border: 2px dashed #e94057;
-            border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            margin-top: 50px; cursor: pointer; position: relative; overflow: hidden;
+        
+        /* Photo Upload Circle Design */
+        .photo-circle { 
+            width: 200px; 
+            height: 200px; 
+            background: #fff0f3; 
+            border: 3px dashed #e94057; 
+            border-radius: 50%; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            margin-top: 50px; 
+            cursor: pointer; 
+            position: relative; 
+            overflow: hidden;
+            transition: all 0.3s;
         }
-        .btn-primary {
-            background: linear-gradient(to right, #e94057, #ff6b81); color: white; border: none; padding: 16px;
-            border-radius: 50px; font-weight: bold; width: 100%; margin-top: auto;
-        }
+        .photo-circle:hover { background-color: #ffe4e8; transform: scale(1.02); }
+
+        .btn-primary { background: linear-gradient(to right, #e94057, #ff6b81); color: white; padding: 16px; border-radius: 50px; font-weight: bold; width: 100%; text-align: center; display: block; text-decoration: none; margin-top: auto; }
     </style>
 </head>
 <body>
-    <div class="app-container text-center">
+    <div class="app-container">
         <div class="w-full text-left mb-4">
-            <a href="create-profile.html" class="text-gray-400"><i class="fas fa-arrow-left text-xl"></i></a>
+            <a href="create-profile.html" class="text-gray-400 hover:text-gray-600 transition">
+                <i class="fas fa-arrow-left text-xl"></i>
+            </a>
         </div>
 
         <h1 class="text-3xl font-extrabold text-gray-800">Add a Photo</h1>
-        <p class="text-gray-400 mt-2">Add a photo to let everyone see who you are.</p>
+        <p class="text-gray-400 mt-2 text-center">Show your best self to the world.</p>
 
-        <label class="photo-circle hover:bg-rose-50 transition">
-            <input type="file" class="hidden" onchange="alert('Photo Selected! (Simulation)')">
-            <i class="fas fa-camera text-4xl text-brand mb-2"></i>
-            <span class="text-xs text-brand font-bold">Tap to Upload</span>
+        <label class="photo-circle">
+            <input type="file" class="hidden" accept="image/*" onchange="handleFile(this)">
+            
+            <i id="uploadIcon" class="fas fa-camera text-5xl text-[#e94057] mb-2"></i>
+            <span id="uploadText" class="text-xs text-[#e94057] font-bold">Tap to Upload</span>
+            
+            <img id="previewImg" class="absolute inset-0 w-full h-full object-cover hidden">
         </label>
 
-        <p class="text-xs text-gray-300 mt-8">Make sure your face is clearly visible.</p>
+        <script>
+            function handleFile(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById('previewImg').src = e.target.result;
+                        document.getElementById('previewImg').classList.remove('hidden');
+                        document.getElementById('uploadIcon').classList.add('hidden');
+                        document.getElementById('uploadText').classList.add('hidden');
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        </script>
 
-        <a href="hobbies.html" class="btn-primary flex items-center justify-center gap-2 no-underline">
-            Next Step <i class="fas fa-arrow-right"></i>
-        </a>
+        <a href="hobbies.html" class="btn-primary">Next Step <i class="fas fa-arrow-right ml-2"></i></a>
     </div>
 </body>
 </html>
