@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        body { background-color: #f3f4f6; font-family: 'Inter', sans-serif; margin: 0; }
+        .app-container { max-width: 450px; margin: 0 auto; background: white; min-height: 100vh; display: flex; flex-direction: column; }
+        
+        /* Navigation Styles */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 450px; background: white; border-top: 1px solid #eee; display: flex; justify-content: space-around; padding: 12px 0; z-index: 100; }
+        .nav-item { text-decoration: none; color: #9ca3af; display: flex; flex-direction: column; align-items: center; font-size: 10px; }
+        .active { color: #e94057; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="flex justify-between items-center p-4 bg-white sticky top-0 z-50">
+            <h1 class="text-xl font-bold text-[#e94057] flex items-center gap-2">
+                <i class="fas fa-fire"></i> Truesoulmate
+            </h1>
+            <i class="fas fa-bell text-gray-400 text-xl cursor-pointer hover:text-gray-600"></i>
+        </div>
+
+        <div class="flex-1 p-4 bg-gray-50 flex flex-col justify-center pb-24">
+            <div class="relative w-full aspect-[3/4] bg-white rounded-3xl shadow-xl overflow-hidden transform transition hover:scale-[1.01] cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80" class="w-full h-full object-cover">
+                <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/90 to-transparent p-6 text-white pt-20">
+                    <h2 class="text-3xl font-bold">Priya, 24</h2>
+                    <p class="text-sm opacity-90"><i class="fas fa-briefcase mr-2"></i>Fashion Designer</p>
+                    <p class="text-sm mt-1"><i class="fas fa-map-marker-alt mr-2"></i> Mumbai, India</p>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-6 mt-6">
+                <button class="w-16 h-16 bg-white text-rose-500 rounded-full shadow-lg text-2xl border flex items-center justify-center hover:bg-gray-50 transition">
+                    <i class="fas fa-times"></i>
+                </button>
+                <button class="w-16 h-16 bg-rose-500 text-white rounded-full shadow-lg text-2xl flex items-center justify-center shadow-red-500/30 hover:bg-rose-600 transition">
+                    <i class="fas fa-heart"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="bottom-nav">
+            <a href="home.html" class="nav-item active"><i class="fas fa-clone text-xl mb-1"></i>Explore</a>
+            <a href="search.html" class="nav-item"><i class="fas fa-search text-xl mb-1"></i>Search</a>
+            <a href="matches.html" class="nav-item">
+                <div class="relative">
+                    <i class="fas fa-comment-dots text-xl mb-1"></i>
+                    <span class="absolute -top-1 -right-1 bg-red-500 rounded-full w-2 h-2"></span>
+                </div>
+                Chat
+            </a>
+            <a href="profile.html" class="nav-item"><i class="far fa-user text-xl mb-1"></i>Profile</a>
+        </div>
+    </div>
+</body>
+</html>
