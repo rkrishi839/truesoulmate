@@ -3,35 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Truesoulmate</title>
+    <title>Truesoulmate - Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         body { background-color: #f3f4f6; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
         
-        /* Premium Container Style */
+        /* Premium Background */
         .app-container { 
             max-width: 450px; 
             margin: 0 auto; 
-            background: #e94057; /* Brand Color Background */
+            background: #e94057; 
             min-height: 100vh; 
-            position: relative; 
             display: flex; 
             flex-direction: column; 
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
+            justify-content: center; 
+            align-items: center; 
+            padding: 24px; 
         }
 
-        /* Animations */
+        /* Heart Animation */
         .bounce-heart { animation: bounce 2s infinite; }
-        @keyframes bounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        /* Google Button Premium Style */
+        @keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        
+        /* Google Button Style */
         .btn-google { 
             background: white; 
             color: #374151; 
@@ -43,12 +39,13 @@
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            text-decoration: none; 
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-            margin-top: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); 
+            margin-top: 20px; 
+            transition: transform 0.2s; 
         }
         .btn-google:active { transform: scale(0.98); }
+        .btn-google:hover { background-color: #f9fafb; }
     </style>
 </head>
 <body>
@@ -58,7 +55,7 @@
             <i class="fas fa-heart text-white text-7xl drop-shadow-lg"></i>
         </div>
         
-        <h1 class="text-4xl font-extrabold mb-2 text-white tracking-wide drop-shadow-md">Truesoulmate</h1>
+        <h1 class="text-4xl font-extrabold mb-2 text-white tracking-wide">Truesoulmate</h1>
         <p class="text-lg text-rose-100 opacity-90 mb-12 font-medium tracking-widest uppercase">Dil se Dil Tak</p>
 
         <div class="bg-white text-gray-800 p-8 rounded-[2rem] w-full shadow-2xl relative overflow-hidden">
@@ -67,7 +64,7 @@
             <h2 class="text-2xl font-bold mb-2 text-gray-800 relative z-10">Get Started</h2>
             <p class="text-gray-400 text-sm mb-6 relative z-10">Sign up to find your perfect match nearby.</p>
             
-            <a href="create-profile.html" class="btn-google gap-3 relative z-10">
+            <button onclick="handleGoogleLogin()" class="btn-google gap-3 relative z-10">
                 <svg class="w-6 h-6" viewBox="0 0 48 48">
                     <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
                     <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
@@ -75,13 +72,70 @@
                     <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
                 </svg>
                 <span>Continue with Google</span>
-            </a>
+            </button>
             
-            <p class="text-xs text-gray-300 mt-6 text-center">
-                By continuing, you agree to our Terms of Service.
-            </p>
+            <p id="statusMsg" class="text-xs text-gray-400 mt-4 text-center">Secure Login Ready</p>
+            <p id="errorMsg" class="text-xs text-red-500 mt-2 text-center font-bold hidden"></p>
         </div>
-
     </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // --- AAPKI FIREBASE KEYS ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyDOZSTWHwfsxgdiUUzGBp3BC8Lh6idmRY8",
+            authDomain: "trusoulmate-c4ea5.firebaseapp.com",
+            projectId: "trusoulmate-c4ea5",
+            storageBucket: "trusoulmate-c4ea5.firebasestorage.app",
+            messagingSenderId: "850936523000",
+            appId: "1:850936523000:web:5e0d8ea0d52d788f01b30d"
+        };
+        // ---------------------------
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        const statusMsg = document.getElementById("statusMsg");
+
+        window.handleGoogleLogin = function() {
+            statusMsg.innerText = "Opening Google Sign-In...";
+            
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    console.log("User:", user);
+                    
+                    statusMsg.innerText = "Success! Redirecting...";
+                    statusMsg.className = "text-xs text-green-500 mt-4 text-center font-bold";
+
+                    // Save User Data
+                    localStorage.setItem("userEmail", user.email);
+                    localStorage.setItem("userNameFromGoogle", user.displayName);
+
+                    // Redirect
+                    setTimeout(() => {
+                        window.location.href = "create-profile.html";
+                    }, 1500);
+                })
+                .catch((error) => {
+                    console.error(error);
+                    statusMsg.innerText = "";
+                    const errorP = document.getElementById("errorMsg");
+                    errorP.innerText = "Login Failed. Check Console.";
+                    errorP.classList.remove("hidden");
+                    
+                    // Specific error help
+                    if(error.code === 'auth/configuration-not-found') {
+                        alert("Error: Authentication not enabled in Firebase Console!");
+                    }
+                    if(error.code === 'auth/unauthorized-domain') {
+                        alert("Error: Add this domain (github.io) to Firebase Console > Authentication > Settings > Authorized Domains");
+                    }
+                });
+        }
+    </script>
 </body>
 </html>
