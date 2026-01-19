@@ -24,18 +24,18 @@
             <p class="text-gray-400 text-sm">Fill details to help us find matches.</p>
         </div>
 
-        <form action="photo-upload.html">
+        <div id="profileForm">
             <label class="text-xs font-bold text-gray-500 ml-2">FULL NAME</label>
-            <input type="text" class="input-field" placeholder="e.g. Rahul Sharma" required>
+            <input type="text" id="nameInput" class="input-field" placeholder="e.g. Rahul Sharma" required>
 
             <div class="flex gap-4">
                 <div class="w-1/2">
                     <label class="text-xs font-bold text-gray-500 ml-2">AGE</label>
-                    <input type="number" class="input-field" placeholder="25" required>
+                    <input type="number" id="ageInput" class="input-field" placeholder="25" required>
                 </div>
                 <div class="w-1/2">
                     <label class="text-xs font-bold text-gray-500 ml-2">GENDER</label>
-                    <select class="input-field">
+                    <select class="input-field" id="genderInput">
                         <option>Male</option>
                         <option>Female</option>
                     </select>
@@ -51,29 +51,45 @@
             </div>
 
             <label class="text-xs font-bold text-gray-500 ml-2">BIO</label>
-            <textarea class="input-field h-24 resize-none" placeholder="I love music, travel and..."></textarea>
+            <textarea id="bioInput" class="input-field h-24 resize-none" placeholder="I love music, travel and..."></textarea>
 
-            <button type="submit" class="btn-primary">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
-        </form>
+            <button onclick="saveDataAndGo()" class="btn-primary">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
+        </div>
     </div>
 
     <script>
+        // 1. DATA SAVE KARNE WALA FUNCTION
+        function saveDataAndGo() {
+            var name = document.getElementById("nameInput").value;
+            var age = document.getElementById("ageInput").value;
+            var city = document.getElementById("cityInput").value;
+            var bio = document.getElementById("bioInput").value;
+
+            if(name === "" || age === "") {
+                alert("Please enter Name and Age!");
+                return;
+            }
+
+            // Browser Memory (LocalStorage) mein save kar rahe hain
+            localStorage.setItem("myName", name);
+            localStorage.setItem("myAge", age);
+            localStorage.setItem("myCity", city);
+            localStorage.setItem("myBio", bio);
+
+            // Agle page par jao
+            window.location.href = "photo-upload.html";
+        }
+
+        // 2. LOCATION WALA FUNCTION
         function getLocation() {
             if (navigator.geolocation) {
-                // Browser se Permission mangega
                 navigator.geolocation.getCurrentPosition(showPosition, showError);
-            } else {
-                alert("Geolocation is not supported by this browser.");
-            }
+            } else { alert("Not supported."); }
         }
         function showPosition(position) {
-            // Permission milne par dummy city bhar dega (Actual API ke bina coordinates se city naam nahi aata)
             document.getElementById("cityInput").value = "Detected Location ✅";
-            alert("Location Access Granted! Coordinates: " + position.coords.latitude + ", " + position.coords.longitude);
         }
-        function showError(error) {
-            alert("Location access denied or error occurred.");
-        }
+        function showError(error) { alert("Location permission denied."); }
     </script>
 </body>
 </html>
