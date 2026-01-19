@@ -10,77 +10,153 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         body { background-color: #f3f4f6; font-family: 'Inter', sans-serif; }
         .app-container { max-width: 450px; margin: 0 auto; background: white; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; }
-        .input-field { width: 100%; padding: 15px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 15px; margin-bottom: 15px; outline: none; transition: 0.2s; }
-        .input-field:focus { border-color: #e94057; background: white; }
-        .btn-primary { background: linear-gradient(to right, #e94057, #ff6b81); color: white; padding: 16px; border-radius: 50px; font-weight: bold; width: 100%; text-align: center; display: block; text-decoration: none; margin-top: auto; cursor: pointer; border: none; }
-        .location-btn { color: #e94057; font-size: 13px; font-weight: bold; cursor: pointer; display: inline-flex; items-center; gap: 5px; margin-bottom: 10px; }
+        
+        /* Input Styling */
+        .input-group { margin-bottom: 15px; }
+        .input-label { font-size: 11px; font-weight: 800; color: #9ca3af; margin-left: 8px; margin-bottom: 4px; display: block; letter-spacing: 0.5px; text-transform: uppercase; }
+        .input-field { width: 100%; padding: 14px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 16px; outline: none; transition: 0.2s; font-weight: 600; color: #374151; }
+        .input-field:focus { border-color: #e94057; background: white; box-shadow: 0 0 0 4px rgba(233, 64, 87, 0.1); }
+        
+        /* Error/Success Message for Username */
+        .status-msg { font-size: 11px; font-weight: 700; margin-left: 8px; margin-top: 4px; display: none; }
+        .text-error { color: #ef4444; }
+        .text-success { color: #10b981; }
+
+        .btn-primary { background: linear-gradient(to right, #e94057, #ff6b81); color: white; padding: 16px; border-radius: 50px; font-weight: bold; width: 100%; text-align: center; display: block; text-decoration: none; margin-top: auto; cursor: pointer; border: none; box-shadow: 0 4px 15px rgba(233, 64, 87, 0.3); }
+        
+        .location-btn { color: #e94057; font-size: 12px; font-weight: bold; cursor: pointer; display: inline-flex; items-center; gap: 5px; position: absolute; right: 12px; top: 38px; }
     </style>
 </head>
 <body>
     <div class="app-container">
         <div class="mb-6">
-            <a href="index.html" class="text-gray-400"><i class="fas fa-arrow-left text-xl"></i></a>
+            <a href="index.html" class="text-gray-400 hover:text-gray-600"><i class="fas fa-arrow-left text-xl"></i></a>
             <h1 class="text-3xl font-extrabold text-gray-800 mt-4">Profile Details</h1>
-            <p class="text-gray-400 text-sm">Fill details to help us find matches.</p>
+            <p class="text-gray-400 text-sm">Fill details so friends can find you.</p>
         </div>
 
         <div id="profileForm">
-            <label class="text-xs font-bold text-gray-500 ml-2">FULL NAME</label>
-            <input type="text" id="nameInput" class="input-field" placeholder="e.g. Rahul Sharma" required>
+            
+            <div class="input-group">
+                <label class="input-label">Full Name</label>
+                <input type="text" id="nameInput" class="input-field" placeholder="e.g. Rahul Sharma">
+            </div>
 
-            <div class="flex gap-4">
-                <div class="w-1/2">
-                    <label class="text-xs font-bold text-gray-500 ml-2">AGE</label>
-                    <input type="number" id="ageInput" class="input-field" placeholder="25" required>
+            <div class="input-group">
+                <label class="input-label">Username (Unique)</label>
+                <div class="relative">
+                    <span class="absolute left-4 top-4 text-gray-400 font-bold">@</span>
+                    <input type="text" id="usernameInput" class="input-field pl-8" placeholder="rahul_07" onkeyup="checkUsername()">
                 </div>
-                <div class="w-1/2">
-                    <label class="text-xs font-bold text-gray-500 ml-2">GENDER</label>
+                <p id="usernameMsg" class="status-msg"></p> </div>
+
+            <div class="input-group">
+                <label class="input-label">Profession / Job</label>
+                <input type="text" id="professionInput" class="input-field" placeholder="e.g. Software Engineer, Student">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Mobile Number</label>
+                <input type="tel" id="mobileInput" class="input-field" placeholder="+91 98765 43210">
+            </div>
+
+            <div class="flex gap-4 mb-2">
+                <div class="w-1/2 input-group">
+                    <label class="input-label">Age</label>
+                    <input type="number" id="ageInput" class="input-field" placeholder="25">
+                </div>
+                <div class="w-1/2 input-group">
+                    <label class="input-label">Gender</label>
                     <select class="input-field" id="genderInput">
                         <option>Male</option>
                         <option>Female</option>
+                        <option>Other</option>
                     </select>
                 </div>
             </div>
 
-            <label class="text-xs font-bold text-gray-500 ml-2">CITY</label>
-            <div class="relative">
-                <input type="text" id="cityInput" class="input-field" placeholder="Mumbai" required>
-                <div onclick="getLocation()" class="location-btn absolute right-4 top-4">
-                    <i class="fas fa-map-marker-alt"></i> Use Current Location
+            <div class="input-group relative">
+                <label class="input-label">City</label>
+                <input type="text" id="cityInput" class="input-field" placeholder="Mumbai">
+                <div onclick="getLocation()" class="location-btn">
+                    <i class="fas fa-map-marker-alt"></i> GPS
                 </div>
             </div>
 
-            <label class="text-xs font-bold text-gray-500 ml-2">BIO</label>
-            <textarea id="bioInput" class="input-field h-24 resize-none" placeholder="I love music, travel and..."></textarea>
+            <div class="input-group">
+                <label class="input-label">Bio</label>
+                <textarea id="bioInput" class="input-field h-24 resize-none" placeholder="Write something about yourself..."></textarea>
+            </div>
 
-            <button onclick="saveDataAndGo()" class="btn-primary">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
+            <button onclick="saveDataAndGo()" id="nextBtn" class="btn-primary">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
         </div>
     </div>
 
     <script>
-        // 1. DATA SAVE KARNE WALA FUNCTION
+        // --- 1. USERNAME CHECK LOGIC ---
+        function checkUsername() {
+            var input = document.getElementById("usernameInput");
+            var msg = document.getElementById("usernameMsg");
+            var btn = document.getElementById("nextBtn");
+            var val = input.value.toLowerCase().trim();
+
+            // Fake Database of Taken Usernames (Abhi ke liye)
+            var takenUsernames = ["admin", "root", "test", "rahul", "priya", "user"];
+
+            if (val.length < 3) {
+                msg.style.display = "none";
+                return;
+            }
+
+            if (takenUsernames.includes(val)) {
+                // Agar username taken hai
+                msg.innerText = "❌ Username is already taken!";
+                msg.className = "status-msg text-error";
+                msg.style.display = "block";
+                input.style.borderColor = "#ef4444";
+                btn.style.opacity = "0.5";
+                btn.disabled = true; // Button disable kar diya
+            } else {
+                // Agar username available hai
+                msg.innerText = "✅ Username available!";
+                msg.className = "status-msg text-success";
+                msg.style.display = "block";
+                input.style.borderColor = "#10b981";
+                btn.style.opacity = "1";
+                btn.disabled = false; // Button enable kar diya
+            }
+        }
+
+        // --- 2. DATA SAVE FUNCTION ---
         function saveDataAndGo() {
             var name = document.getElementById("nameInput").value;
+            var username = document.getElementById("usernameInput").value;
+            var profession = document.getElementById("professionInput").value;
+            var mobile = document.getElementById("mobileInput").value;
             var age = document.getElementById("ageInput").value;
             var city = document.getElementById("cityInput").value;
             var bio = document.getElementById("bioInput").value;
 
-            if(name === "" || age === "") {
-                alert("Please enter Name and Age!");
+            // Simple Validation
+            if(name === "" || username === "" || age === "") {
+                alert("Please fill Name, Username and Age!");
                 return;
             }
 
-            // Browser Memory (LocalStorage) mein save kar rahe hain
+            // Save to LocalStorage (Browser Memory)
             localStorage.setItem("myName", name);
+            localStorage.setItem("myUsername", "@" + username);
+            localStorage.setItem("myProfession", profession);
+            localStorage.setItem("myMobile", mobile);
             localStorage.setItem("myAge", age);
             localStorage.setItem("myCity", city);
             localStorage.setItem("myBio", bio);
 
-            // Agle page par jao
+            // Go to Next Page
             window.location.href = "photo-upload.html";
         }
 
-        // 2. LOCATION WALA FUNCTION
+        // --- 3. LOCATION FUNCTION ---
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition, showError);
